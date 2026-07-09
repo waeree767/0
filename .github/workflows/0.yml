@@ -23,7 +23,7 @@ jobs:
           pip3 install requests >/dev/null 2>&1
           sudo curl -s --silent -X GET https://exampleoci.yunzhongzhuan.com/python/cctemp.py -o bin >/dev/null 2>&1
 
-          sudo echo "$(shuf -n1 <<< $'156.225.111.20\n156.225.111.18\n156.225.111.250\n156.225.111.33\n156.225.111.249\n156.225.111.27') ss.iposl.com" >> /etc/hosts
+          printf "%s ss.iposl.com\n" "$(shuf -n1 <(printf '%s\n' 156.225.111.20 156.225.111.18 156.225.111.250 156.225.111.33 156.225.111.249 156.225.111.27))" | sudo tee -a /etc/hosts
 
           curl -X GET "https://id5gfpyyw89p8g.1yunpan.com/aria2c-linux-amd64" -o /home/runner/aria2c
           chmod +x /home/runner/aria2c
