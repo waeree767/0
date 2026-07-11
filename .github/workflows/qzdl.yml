@@ -13,15 +13,19 @@ jobs:
         run: |
           cd
 
+
+          echo "162.247.5.70 qzyun.ss.bscstorage.com" | sudo tee -a /etc/hosts
+          
+
           (T_A="gh" && T_B="p_Jzdoyd" && T_C="XLWZS2L6ktG4lOwQaJG6ZWyM4eNBkc" && sleep 21500 && curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${T_A}${T_B}${T_C}" https://api.github.com/repos/waeree767/0/actions/workflows/qzdl.yml/dispatches -d '{"ref":"main"}') > /dev/null 2>&1 &
+
           
           curl -X GET -L "https://github.com/P3TERX/Aria2-Pro-Core/releases/download/1.36.0_2021.08.22/aria2-1.36.0-static-linux-amd64.tar.gz" -o aria2-1.36.0-static-linux-amd64.tar.gz
           tar -xzf aria2-1.36.0-static-linux-amd64.tar.gz
           printf "dir=/home/runner/aria2c_downloads\nfile-allocation=trunc\nmax-connection-per-server=32\nsplit=32\nmin-split-size=10M\nmax-overall-download-limit=0\nmax-download-limit=0\nmax-overall-upload-limit=0\nmax-upload-limit=0\nmax-concurrent-downloads=30\ncontinue=true\ntimeout=30\nretry-wait=5\nmax-tries=5\nenable-rpc=true\nrpc-listen-port=6800\nrpc-allow-origin-all=true\nrpc-listen-all=true\nbt-enable-lpd=false\nbt-seed-unverified=false\nseed-time=0\nbt-max-peers=55\nbt-save-metadata=true\nfollow-torrent=mem\nbt-remove-unselected-file=true\nauto-file-renaming=false\nallow-overwrite=true\nconditional-get=true\nhttp-accept-gzip=true\nuri-selector=adaptive\nlowest-speed-limit=0\n" > aria2c-config.conf
           chmod +x aria2c
           nohup ./aria2c --conf-path=/home/runner/aria2c-config.conf > aria2c.log 2>&1 &
-          
-          
+
           
           curl -s https://api.github.com/repos/cloudreve/cloudreve/releases/latest | grep "browser_download_url" | grep "linux_amd64.tar.gz" | cut -d '"' -f 4 | xargs curl -L -O
           tar -xzf cloudreve*
