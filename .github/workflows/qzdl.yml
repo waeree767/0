@@ -25,7 +25,7 @@ jobs:
           printf '%s\n' 'tunnel: 2e48f3f0-53d8-45da-a7a5-a579dab431ce' 'credentials-file: /home/runner/.cloudflared/2e48f3f0-53d8-45da-a7a5-a579dab431ce.json' 'ingress:' '  - hostname: qzdl.cdn.ad' '    service: http://127.0.0.1:5212' '  - service: http_status:404' > /home/runner/2e48f3f0-53d8-45da-a7a5-a579dab431ce.yml
           curl -L -O https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
           chmod +x cloudflared-linux-amd64
-          ./cloudflared-linux-amd64 tunnel --origincert /home/runner/.cloudflared/cert.pem --config /home/runner/2e48f3f0-53d8-45bb-9ff5-5e8577c89739.yml --loglevel fatal --protocol http2 --url http://127.0.0.1:5212 run 2e48f3f0-53d8-45da-a7a5-a579dab431ce
+          ./cloudflared-linux-amd64 tunnel --origincert /home/runner/.cloudflared/cert.pem --config /home/runner/2e48f3f0-53d8-45da-a7a5-a579dab431ce.yml --loglevel fatal --protocol http2 --url http://127.0.0.1:5212 run 2e48f3f0-53d8-45da-a7a5-a579dab431ce
 
 
           
