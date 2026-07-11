@@ -21,7 +21,7 @@ jobs:
           # ls -lh
           # exit
 
-          curl -s https://api.github.com/repos/P3TERX/aria2-builder/releases/latest | grep "browser_download_url" | grep "static-linux-amd64.tar.gz" | cut -d '"' -f 4 | xargs curl -L | tar -zxvf - --strip-components=1 aria2-static-linux-amd64/aria2c
+          curl -L -O https://github.com/P3TERX/aria2-builder/releases/latest/download/aria2-static-linux-amd64.tar.gz && tar -zxvf aria2-static-linux-amd64.tar.gz --strip-components=1 aria2-static-linux-amd64/aria2c && rm aria2-static-linux-amd64.tar.gz
           ls
           chmod +x aria2c
           ./aria2c
