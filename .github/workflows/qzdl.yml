@@ -9,6 +9,8 @@ jobs:
       matrix:
         shard: [1]
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4  # 👈 就是这一步，把仓库里的根目录文件“下载”到虚拟机里
       - name: runner
         run: |
           cd
