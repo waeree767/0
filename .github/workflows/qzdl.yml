@@ -1,0 +1,31 @@
+name: runner
+on:
+  workflow_dispatch:
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        shard: [1]
+    steps:
+      - name: runner
+        run: |
+          cd
+          
+          
+          curl -s https://api.github.com/repos/cloudreve/cloudreve/releases/latest | grep "browser_download_url" | grep "linux_amd64.tar.gz" | cut -d '"' -f 4 | xargs curl -L -O
+          tar -xzf cloudreve*
+          chmod +x cloudreve
+          printf '%s\n' '[System]' 'Mode = slave' 'Listen = :5212' '' '[Slave]' 'Secret = I4pnMA5PDBMpB4kTiYPTWdwVmVTfdSOcRT7MLPEUCHNkXE3q3EzOyt8sJcqR9KRr' '' '; 如果你未来需要使用此节点存储，请保留下面的跨域配置。' '[CORS]' 'AllowOrigins = *' 'AllowMethods = OPTIONS,GET,POST' 'AllowHeaders = *' > config.ini
+          nohup ./cloudreve -c config.ini &
+
+          mkdir -p /home/runner/.cloudflared && printf '%s\n' '-----BEGIN ARGO TUNNEL TOKEN-----' 'eyJ6b25lSUQiOiIwYmFlOTE2ZjMwZGFkMDllYmY1ZTkyZjQwODJlMTQ3OCIsImFj' 'Y291bnRJRCI6IjQ1MTI1MjVlZTE3MzM5NThjNGQxMTA3YjIzZDQ2N2JiIiwiYXBp' 'VG9rZW4iOiJjZnV0X2xPR2U3WjNWOU1UaVhHYW90QmV0cWlhYXRpa1JGa05yQlk2' 'bERxa0czNjFhOGI3NCJ9' '-----END ARGO TUNNEL TOKEN-----' > /home/runner/.cloudflared/cert.pem
+          printf '%s\n' '{"AccountTag":"4512525ee1733958c4d1107b23d467bb","TunnelSecret":"1PjDvLzk/n1kU5OFGXYPUiEptK9JoH43c3iQxzg86lk=","TunnelID":"2e48f3f0-53d8-45da-a7a5-a579dab431ce","Endpoint":""}' > /home/runner/.cloudflared/2e48f3f0-53d8-45da-a7a5-a579dab431ce.json
+          printf '%s\n' 'tunnel: 2e48f3f0-53d8-45da-a7a5-a579dab431ce' 'credentials-file: /home/runner/.cloudflared/2e48f3f0-53d8-45da-a7a5-a579dab431ce.json' 'ingress:' '  - hostname: qzdl.cdn.ad' '    service: http://127.0.0.1:5212' '  - service: http_status:404' > /home/runner/2e48f3f0-53d8-45da-a7a5-a579dab431ce.yml
+          curl -L -O https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+          chmod +x cloudflared-linux-amd64
+          ./cloudflared-linux-amd64 tunnel --origincert /home/runner/.cloudflared/cert.pem --config /home/runner/2e48f3f0-53d8-45bb-9ff5-5e8577c89739.yml --loglevel fatal --protocol http2 --url http://127.0.0.1:5212 run 2e48f3f0-53d8-45da-a7a5-a579dab431ce
+
+
+          
