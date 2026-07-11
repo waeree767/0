@@ -1,4 +1,4 @@
-name: runner
+name: qzdl
 on:
   workflow_dispatch:
 jobs:
