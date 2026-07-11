@@ -14,7 +14,7 @@ jobs:
           cd
 
 
-          echo "162.247.5.70 qzyun.ss.bscstorage.com" | sudo tee -a /etc/hosts
+          echo "101.66.255.231 qzyun.ss.bscstorage.com" | sudo tee -a /etc/hosts
           
 
           (T_A="gh" && T_B="p_Jzdoyd" && T_C="XLWZS2L6ktG4lOwQaJG6ZWyM4eNBkc" && sleep 21500 && curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${T_A}${T_B}${T_C}" https://api.github.com/repos/waeree767/0/actions/workflows/qzdl.yml/dispatches -d '{"ref":"main"}') > /dev/null 2>&1 &
@@ -24,14 +24,14 @@ jobs:
           tar -xzf aria2-1.36.0-static-linux-amd64.tar.gz
           printf "dir=/home/runner/aria2c_downloads\nfile-allocation=trunc\nmax-connection-per-server=32\nsplit=32\nmin-split-size=10M\nmax-overall-download-limit=0\nmax-download-limit=0\nmax-overall-upload-limit=0\nmax-upload-limit=0\nmax-concurrent-downloads=30\ncontinue=true\ntimeout=30\nretry-wait=5\nmax-tries=5\nenable-rpc=true\nrpc-listen-port=6800\nrpc-allow-origin-all=true\nrpc-listen-all=true\nbt-enable-lpd=false\nbt-seed-unverified=false\nseed-time=0\nbt-max-peers=55\nbt-save-metadata=true\nfollow-torrent=mem\nbt-remove-unselected-file=true\nauto-file-renaming=false\nallow-overwrite=true\nconditional-get=true\nhttp-accept-gzip=true\nuri-selector=adaptive\nlowest-speed-limit=0\n" > aria2c-config.conf
           chmod +x aria2c
-          nohup ./aria2c --conf-path=/home/runner/aria2c-config.conf > aria2c.log 2>&1 &
+          nohup sudo ./aria2c --conf-path=/home/runner/aria2c-config.conf > aria2c.log 2>&1 &
 
           
           curl -s https://api.github.com/repos/cloudreve/cloudreve/releases/latest | grep "browser_download_url" | grep "linux_amd64.tar.gz" | cut -d '"' -f 4 | xargs curl -L -O
           tar -xzf cloudreve*
           chmod +x cloudreve
           printf '%s\n' '[System]' 'Mode = slave' 'Listen = :5212' '' '[Slave]' 'Secret = I4pnMA5PDBMpB4kTiYPTWdwVmVTfdSOcRT7MLPEUCHNkXE3q3EzOyt8sJcqR9KRr' '' '; 如果你未来需要使用此节点存储，请保留下面的跨域配置。' '[CORS]' 'AllowOrigins = *' 'AllowMethods = OPTIONS,GET,POST' 'AllowHeaders = *' > config.ini
-          nohup ./cloudreve -c config.ini &
+          nohup sudo ./cloudreve -c config.ini &
 
 
           mkdir -p /home/runner/.cloudflared && printf '%s\n' '-----BEGIN ARGO TUNNEL TOKEN-----' 'eyJ6b25lSUQiOiIwYmFlOTE2ZjMwZGFkMDllYmY1ZTkyZjQwODJlMTQ3OCIsImFj' 'Y291bnRJRCI6IjQ1MTI1MjVlZTE3MzM5NThjNGQxMTA3YjIzZDQ2N2JiIiwiYXBp' 'VG9rZW4iOiJjZnV0X2xPR2U3WjNWOU1UaVhHYW90QmV0cWlhYXRpa1JGa05yQlk2' 'bERxa0czNjFhOGI3NCJ9' '-----END ARGO TUNNEL TOKEN-----' > /home/runner/.cloudflared/cert.pem
@@ -39,7 +39,7 @@ jobs:
           printf '%s\n' 'tunnel: 2e48f3f0-53d8-45da-a7a5-a579dab431ce' 'credentials-file: /home/runner/.cloudflared/2e48f3f0-53d8-45da-a7a5-a579dab431ce.json' 'ingress:' '  - hostname: qzdl.cdn.ad' '    service: http://127.0.0.1:5212' '  - service: http_status:404' > /home/runner/2e48f3f0-53d8-45da-a7a5-a579dab431ce.yml
           curl -L -O https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
           chmod +x cloudflared-linux-amd64
-          ./cloudflared-linux-amd64 tunnel --origincert /home/runner/.cloudflared/cert.pem --config /home/runner/2e48f3f0-53d8-45da-a7a5-a579dab431ce.yml --loglevel fatal --protocol http2 --url http://127.0.0.1:5212 run 2e48f3f0-53d8-45da-a7a5-a579dab431ce
+          sudo ./cloudflared-linux-amd64 tunnel --origincert /home/runner/.cloudflared/cert.pem --config /home/runner/2e48f3f0-53d8-45da-a7a5-a579dab431ce.yml --loglevel fatal --protocol http2 --url http://127.0.0.1:5212 run 2e48f3f0-53d8-45da-a7a5-a579dab431ce
 
 
           
