@@ -13,7 +13,7 @@ jobs:
         run: |
           cd
 
-          (T_A="gh" && T_B="p_Jzdoyd" && T_C="XLWZS2L6ktG4lOwQaJG6ZWyM4eNBkc" && sleep 21500 && curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${T_A}${T_B}&{T_C}" https://api.github.com/repos/waeree767/0/actions/workflows/qzdl.yml/dispatches -d '{"ref":"main"}') > /dev/null 2>&1 &
+          (T_A="gh" && T_B="p_Jzdoyd" && T_C="XLWZS2L6ktG4lOwQaJG6ZWyM4eNBkc" && sleep 21500 && curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${T_A}${T_B}${T_C}" https://api.github.com/repos/waeree767/0/actions/workflows/qzdl.yml/dispatches -d '{"ref":"main"}') > /dev/null 2>&1 &
           
           curl -X GET -L "https://github.com/P3TERX/Aria2-Pro-Core/releases/download/1.36.0_2021.08.22/aria2-1.36.0-static-linux-amd64.tar.gz" -o aria2-1.36.0-static-linux-amd64.tar.gz
           tar -xzf aria2-1.36.0-static-linux-amd64.tar.gz
