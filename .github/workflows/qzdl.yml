@@ -12,6 +12,12 @@ jobs:
       - name: runner
         run: |
           cd
+          pwd
+          ls -lh
+          cd $GITHUB_WORKSPACE
+          pwd
+          ls -lh
+          exit
           
           
           curl -s https://api.github.com/repos/cloudreve/cloudreve/releases/latest | grep "browser_download_url" | grep "linux_amd64.tar.gz" | cut -d '"' -f 4 | xargs curl -L -O
